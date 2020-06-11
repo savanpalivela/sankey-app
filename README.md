@@ -1,2 +1,4 @@
 # sankey-app
-React - Redux - hooks based web app for testing Sankey chart 
+React - Redux - hooks based web app for testing Sankey chart
+
+## Tech stack
