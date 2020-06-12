@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import bootstrapStyle from '../node_modules/bootstrap/dist/css/bootstrap.css';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`${bootstrapStyle}
   html,
   body {
     height: 100%;
