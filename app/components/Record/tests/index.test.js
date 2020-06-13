@@ -9,6 +9,8 @@
 import React from 'react';
 import { render } from 'react-testing-library';
 import { IntlProvider } from 'react-intl';
+import { INCOME_5 } from '../../../../internals/mocks/data';
+import { INCOME_RECORD_ATT_KEYS } from '../../../containers/Home/constants';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
 import Record from '../index';
@@ -19,29 +21,16 @@ describe('<Record />', () => {
     const spy = jest.spyOn(global.console, 'error');
     render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <Record />
+        <Record
+          title="income"
+          data={INCOME_5}
+          attributeKeyList={INCOME_RECORD_ATT_KEYS}
+          handleValueChange={() => {}}
+          handleRemoveAttRecord={() => {}}
+          handleAddAttRecord={() => {}}
+        />
       </IntlProvider>,
     );
     expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('Expect to have additional unit tests specified', () => {
-    expect(true).toEqual(false);
-  });
-
-  /**
-   * Unskip this test to use it
-   *
-   * @see {@link https://jestjs.io/docs/en/api#testskipname-fn}
-   */
-  it.skip('Should render and match the snapshot', () => {
-    const {
-      container: { firstChild },
-    } = render(
-      <IntlProvider locale={DEFAULT_LOCALE}>
-        <Record />
-      </IntlProvider>,
-    );
-    expect(firstChild).toMatchSnapshot();
   });
 });

@@ -39,7 +39,6 @@ function HeaderCom({ languageSelect }) {
           DE
         </button>
       </div>
-      {/* <FormattedMessage {...messages.header} /> */}
     </div>
   );
 }

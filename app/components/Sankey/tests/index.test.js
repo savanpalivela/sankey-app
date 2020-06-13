@@ -9,6 +9,7 @@
 import React from 'react';
 import { render } from 'react-testing-library';
 import { IntlProvider } from 'react-intl';
+import { LINK_1, NODE_5 } from '../../../../internals/mocks/data';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
 import Sankey from '../index';
@@ -19,29 +20,9 @@ describe('<Sankey />', () => {
     const spy = jest.spyOn(global.console, 'error');
     render(
       <IntlProvider locale={DEFAULT_LOCALE}>
-        <Sankey />
+        <Sankey links={LINK_1} nodes={NODE_5} />
       </IntlProvider>,
     );
     expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('Expect to have additional unit tests specified', () => {
-    expect(true).toEqual(false);
-  });
-
-  /**
-   * Unskip this test to use it
-   *
-   * @see {@link https://jestjs.io/docs/en/api#testskipname-fn}
-   */
-  it.skip('Should render and match the snapshot', () => {
-    const {
-      container: { firstChild },
-    } = render(
-      <IntlProvider locale={DEFAULT_LOCALE}>
-        <Sankey />
-      </IntlProvider>,
-    );
-    expect(firstChild).toMatchSnapshot();
   });
 });

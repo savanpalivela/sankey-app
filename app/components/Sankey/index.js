@@ -24,10 +24,14 @@ function SankeyChart({ nodes, links, intl }) {
     const hintValue = {
       [`${activeLink.source.name} ➞ ${
         activeLink.target.name
-      }`]: activeLink.value,
+      }`]: intl.formatNumber(activeLink.value),
     };
     return <Hint x={x} y={y} value={hintValue} />;
   };
+
+  if (nodes === undefined) {
+    return null;
+  }
 
   return (
     <div className={`${styles.sankeyWrapper} card`}>

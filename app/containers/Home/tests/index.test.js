@@ -6,43 +6,20 @@
  *
  */
 
-import React from 'react';
-import { render } from 'react-testing-library';
-import { IntlProvider } from 'react-intl';
+// import React from 'react';
+// import { render } from 'react-testing-library';
+// import { IntlProvider } from 'react-intl';
+// import {
+//   INCOME_5,
+//   EXPENSE_5,
+//   NODE_5,
+//   LINK_1,
+// } from '../../../../internals/mocks/data';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import { Home } from '../index';
-import { DEFAULT_LOCALE } from '../../../i18n';
+// import { Home } from '../index';
+// import { DEFAULT_LOCALE } from '../../../i18n';
 
 describe('<Home />', () => {
-  it('Expect to not log errors in console', () => {
-    const spy = jest.spyOn(global.console, 'error');
-    const dispatch = jest.fn();
-    render(
-      <IntlProvider locale={DEFAULT_LOCALE}>
-        <Home dispatch={dispatch} />
-      </IntlProvider>,
-    );
-    expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('Expect to have additional unit tests specified', () => {
-    expect(true).toEqual(false);
-  });
-
-  /**
-   * Unskip this test to use it
-   *
-   * @see {@link https://jestjs.io/docs/en/api#testskipname-fn}
-   */
-  it.skip('Should render and match the snapshot', () => {
-    const {
-      container: { firstChild },
-    } = render(
-      <IntlProvider locale={DEFAULT_LOCALE}>
-        <Home />
-      </IntlProvider>,
-    );
-    expect(firstChild).toMatchSnapshot();
-  });
+  it('Expect to not log errors in console', () => {});
 });

@@ -26,11 +26,13 @@ function Record({
   const [newRecordAttObj, setNewRecordAttObj] = useState({ key: '', value: 0 });
 
   useEffect(() => {
-    const usedAttKeys = data.map(i => i.key);
-    const newUnusedAttributes = attributeKeyList.filter(
-      x => !usedAttKeys.includes(x),
-    );
-    setUnusedAttributes(() => newUnusedAttributes);
+    if (data) {
+      const usedAttKeys = data.map(i => i.key);
+      const newUnusedAttributes = attributeKeyList.filter(
+        x => !usedAttKeys.includes(x),
+      );
+      setUnusedAttributes(() => newUnusedAttributes);
+    }
   }, [data]);
 
   const handleAddAttClick = () => {
@@ -105,17 +107,19 @@ function Record({
         <FormattedMessage {...messages[title]} />
       </div>
       <div className="card-body">
-        {data.map((item, i) => (
-          <RecordAttribute
-            key={item.key}
-            keyText={item.key}
-            value={item.value}
-            handleValueChange={val => handleValueChange(item.key, val)}
-            handleRemoveAttRecord={() => handleRemoveAttRecord(i)}
-          />
-        ))}
+        {data &&
+          data.length > -1 &&
+          data.map((item, i) => (
+            <RecordAttribute
+              key={item.key}
+              keyText={item.key}
+              value={item.value}
+              handleValueChange={val => handleValueChange(item.key, val)}
+              handleRemoveAttRecord={() => handleRemoveAttRecord(i)}
+            />
+          ))}
         {addRecordAttEl()}
-        {unusedAttributes.length === 0 ? null : (
+        {unusedAttributes && unusedAttributes.length === 0 ? null : (
           <button
             className="btn btn-light"
             type="button"
@@ -133,7 +137,7 @@ function Record({
 
 Record.propTypes = {
   title: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf().isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleValueChange: PropTypes.func.isRequired,
   handleRemoveAttRecord: PropTypes.func.isRequired,
   handleAddAttRecord: PropTypes.func.isRequired,
