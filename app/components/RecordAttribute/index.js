@@ -29,7 +29,12 @@ function RecordAttribute({
         <FormattedMessage {...messages[keyText]} />
       </div>
       <div className="col-sm-5">
-        <input onChange={handleChange} value={value} type="number" />
+        <input
+          className="form-control"
+          onChange={handleChange}
+          value={value}
+          type="number"
+        />
       </div>
       <div className="col-sm-2">
         <button

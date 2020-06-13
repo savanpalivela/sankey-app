@@ -30,7 +30,9 @@ import {
   loadSankeyData,
   editRecordValuesAction,
   removeRecordAttributeAction,
+  addRecordAttributeAction,
 } from './actions';
+import { INCOME_RECORD_ATT_KEYS, EXPENSE_RECORD_ATT_KEYS } from './constants';
 import styles from './styles.scss';
 export function Home({
   loadData,
@@ -41,11 +43,11 @@ export function Home({
   expense,
   editRecordValue,
   removeRecordAttribute,
+  addRecordAttribute,
 }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
   useEffect(() => {
-    // dispatch(loadSankeyData());
     if (!isLoaded) {
       loadData();
     }
@@ -70,11 +72,15 @@ export function Home({
           <Record
             title="income"
             data={income}
+            attributeKeyList={INCOME_RECORD_ATT_KEYS}
             handleValueChange={(key, val) => {
               handleValueChange('income', key, val);
             }}
             handleRemoveAttRecord={index => {
               removeRecordAttribute('income', index);
+            }}
+            handleAddAttRecord={attObj => {
+              addRecordAttribute('income', attObj);
             }}
           />
         </div>
@@ -82,11 +88,15 @@ export function Home({
           <Record
             title="expense"
             data={expense}
+            attributeKeyList={EXPENSE_RECORD_ATT_KEYS}
             handleValueChange={(key, val) => {
               handleValueChange('expense', key, val);
             }}
             handleRemoveAttRecord={index => {
               removeRecordAttribute('expense', index);
+            }}
+            handleAddAttRecord={attObj => {
+              addRecordAttribute('expense', attObj);
             }}
           />
         </div>
@@ -103,6 +113,7 @@ Home.propTypes = {
   isLoaded: PropTypes.bool.isRequired,
   loadData: PropTypes.func.isRequired,
   removeRecordAttribute: PropTypes.func.isRequired,
+  addRecordAttribute: PropTypes.func.isRequired,
   editRecordValue: PropTypes.func.isRequired,
 };
 
@@ -133,6 +144,13 @@ function mapDispatchToProps(dispatch) {
         index,
       };
       dispatch(removeRecordAttributeAction(payload));
+    },
+    addRecordAttribute: (recordType, attObj) => {
+      const payload = {
+        recordType,
+        attObj,
+      };
+      dispatch(addRecordAttributeAction(payload));
     },
   };
 }

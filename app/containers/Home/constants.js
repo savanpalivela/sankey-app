@@ -3,6 +3,20 @@
  * Home constants
  *
  */
+export const INCOME_RECORD_ATT_KEYS = [
+  'services',
+  'recurring',
+  'project',
+  'consultation',
+  'interest',
+];
+export const EXPENSE_RECORD_ATT_KEYS = [
+  'operations',
+  'nonOperating',
+  'fixed',
+  'variable',
+  'tax',
+];
 
 export const DEFAULT_ACTION = 'app/Home/DEFAULT_ACTION';
 export const GET_SANKEY_DATA = 'GET_SANKEY_DATA';

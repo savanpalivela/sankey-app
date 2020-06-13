@@ -11,6 +11,7 @@ import {
   GET_SANKEY_DATA_ERROR,
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
+  ADD_ATT_RECORD_DATA,
 } from './constants';
 
 const defaultAction = () => ({
@@ -41,6 +42,11 @@ const removeRecordAttributeAction = payload => ({
   payload,
 });
 
+const addRecordAttributeAction = payload => ({
+  type: ADD_ATT_RECORD_DATA,
+  payload,
+});
+
 export {
   defaultAction,
   loadSankeyData,
@@ -48,4 +54,5 @@ export {
   setSankeyDataError,
   editRecordValuesAction,
   removeRecordAttributeAction,
+  addRecordAttributeAction,
 };

@@ -41,6 +41,14 @@ export default defineMessages({
     id: `${scope}.consultation`,
     defaultMessage: 'Consultation',
   },
+  interest: {
+    id: `${scope}.interest`,
+    defaultMessage: 'Interest',
+  },
+  tax: {
+    id: `${scope}.tax`,
+    defaultMessage: 'Tax',
+  },
   lose: {
     id: `${scope}.lose`,
     defaultMessage: 'Lose',

@@ -12,6 +12,7 @@ import {
   GET_SANKEY_DATA_ERROR,
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
+  ADD_ATT_RECORD_DATA,
 } from './constants';
 
 export const initialState = {
@@ -74,6 +75,22 @@ const homeReducer = (state = initialState, action) =>
           income.splice(action.payload.index, 1);
         } else if (action.payload.recordType === 'expense') {
           expense.splice(action.payload.index, 1);
+        }
+        draft.income = income;
+        draft.expense = expense;
+        const { nodes, links } = GetSankeyData(income, expense);
+        draft.nodes = nodes;
+        draft.links = links;
+        break;
+      }
+
+      case ADD_ATT_RECORD_DATA: {
+        const income = [...state.income];
+        const expense = [...state.expense];
+        if (action.payload.recordType === 'income') {
+          income.push(action.payload.attObj);
+        } else if (action.payload.recordType === 'expense') {
+          expense.push(action.payload.attObj);
         }
         draft.income = income;
         draft.expense = expense;
