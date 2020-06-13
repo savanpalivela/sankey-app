@@ -1,7 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import bootstrapStyle from '../node_modules/bootstrap/dist/css/bootstrap.css';
+import reactVisStyles from '../node_modules/react-vis/dist/style.css';
 
-const GlobalStyle = createGlobalStyle`${bootstrapStyle}
+const GlobalStyle = createGlobalStyle`${bootstrapStyle} ${reactVisStyles}
   html,
   body {
     height: 100%;

@@ -83,6 +83,9 @@ function Record({
           </div>
           <div className="col-sm-2">
             <button
+              disabled={
+                newRecordAttObj.key === '' || newRecordAttObj.value === 0
+              }
               className="btn btn-light"
               type="button"
               onClick={handleAddAttClick}

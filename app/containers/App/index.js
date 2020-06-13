@@ -13,14 +13,11 @@ import { Switch, Route } from 'react-router-dom';
 import Home from 'containers/Home';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
-import HeaderCom from '../../components/HeaderCom';
-
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
   return (
     <div className="container">
-      <HeaderCom />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route component={NotFoundPage} />

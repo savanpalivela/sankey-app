@@ -32,7 +32,9 @@ import {
   removeRecordAttributeAction,
   addRecordAttributeAction,
 } from './actions';
+import { changeLocale } from '../LanguageProvider/actions';
 import { INCOME_RECORD_ATT_KEYS, EXPENSE_RECORD_ATT_KEYS } from './constants';
+import HeaderCom from '../../components/HeaderCom';
 import styles from './styles.scss';
 export function Home({
   loadData,
@@ -44,6 +46,7 @@ export function Home({
   editRecordValue,
   removeRecordAttribute,
   addRecordAttribute,
+  changeLocaleHandler,
 }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
@@ -63,6 +66,11 @@ export function Home({
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
+      <HeaderCom
+        languageSelect={lang => {
+          changeLocaleHandler(lang);
+        }}
+      />
       <h3 className={styles.pageTitle}>
         <FormattedMessage {...messages.header} />
       </h3>
@@ -115,6 +123,7 @@ Home.propTypes = {
   removeRecordAttribute: PropTypes.func.isRequired,
   addRecordAttribute: PropTypes.func.isRequired,
   editRecordValue: PropTypes.func.isRequired,
+  changeLocaleHandler: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -151,6 +160,9 @@ function mapDispatchToProps(dispatch) {
         attObj,
       };
       dispatch(addRecordAttributeAction(payload));
+    },
+    changeLocaleHandler: lang => {
+      dispatch(changeLocale(lang));
     },
   };
 }
