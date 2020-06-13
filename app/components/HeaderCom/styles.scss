@@ -1,0 +1,11 @@
+@import '../../utils/styles/variables.scss';
+
+.headerContainer {
+    background-color: $header-bg;
+    height: 56px;
+
+    .logo {
+        margin-top: 6px;
+        width: 100%;
+    }
+}
