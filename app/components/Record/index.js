@@ -58,8 +58,8 @@ function Record({
             <FormattedMessage {...messages.defaultSelect}>
               {message => <option value="">{message}</option>}
             </FormattedMessage>
-            {unusedAttributes.map((item, i) => {
-              const key = `keys-${title}-${i}`;
+            {unusedAttributes.map(item => {
+              const key = `keys-${title}-${item}`;
               return (
                 <FormattedMessage {...messages[item]} key={key}>
                   {message => <option value={item}>{message}</option>}
