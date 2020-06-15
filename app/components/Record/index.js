@@ -41,65 +41,58 @@ function Record({
     setShowAddEl(false);
   };
 
-  const addRecordAttEl = () => {
-    if (showAddEl) {
-      return (
-        <div className="row">
-          <div className="col-sm-5">
-            <select
-              className="form-control"
-              onChange={e => {
-                setNewRecordAttObj({
-                  ...newRecordAttObj,
-                  key:
-                    e.currentTarget.options[e.currentTarget.selectedIndex]
-                      .value,
-                });
-              }}
-            >
-              <FormattedMessage {...messages.defaultSelect}>
-                {message => <option value="">{message}</option>}
-              </FormattedMessage>
-              {unusedAttributes.map((item, i) => {
-                const key = `keys-${title}-${i}`;
-                return (
-                  <FormattedMessage {...messages[item]} key={key}>
-                    {message => <option value={item}>{message}</option>}
-                  </FormattedMessage>
-                );
-              })}
-            </select>
-          </div>
-          <div className="col-sm-5">
-            <input
-              className="form-control"
-              type="number"
-              value={newRecordAttObj.value}
-              onChange={e => {
-                setNewRecordAttObj({
-                  ...newRecordAttObj,
-                  value: parseInt(e.currentTarget.value, 10),
-                });
-              }}
-            />
-          </div>
-          <div className="col-sm-2">
-            <button
-              disabled={
-                newRecordAttObj.key === '' || newRecordAttObj.value === 0
-              }
-              className="btn btn-light"
-              type="button"
-              onClick={handleAddAttClick}
-            >
-              <FormattedMessage {...messages.addRecordAtt} />
-            </button>
-          </div>
+  const addRecordAttEl = () =>
+    showAddEl && (
+      <div className="row">
+        <div className="col-sm-5">
+          <select
+            className="form-control"
+            onChange={e => {
+              setNewRecordAttObj({
+                ...newRecordAttObj,
+                key:
+                  e.currentTarget.options[e.currentTarget.selectedIndex].value,
+              });
+            }}
+          >
+            <FormattedMessage {...messages.defaultSelect}>
+              {message => <option value="">{message}</option>}
+            </FormattedMessage>
+            {unusedAttributes.map(item => {
+              const key = `keys-${title}-${item}`;
+              return (
+                <FormattedMessage {...messages[item]} key={key}>
+                  {message => <option value={item}>{message}</option>}
+                </FormattedMessage>
+              );
+            })}
+          </select>
         </div>
-      );
-    }
-    return null;
-  };
+        <div className="col-sm-5">
+          <input
+            className="form-control"
+            type="number"
+            value={newRecordAttObj.value}
+            onChange={e => {
+              setNewRecordAttObj({
+                ...newRecordAttObj,
+                value: parseInt(e.currentTarget.value, 10),
+              });
+            }}
+          />
+        </div>
+        <div className="col-sm-2">
+          <button
+            disabled={newRecordAttObj.key === '' || newRecordAttObj.value === 0}
+            className="btn btn-light"
+            type="button"
+            onClick={handleAddAttClick}
+          >
+            <FormattedMessage {...messages.addRecordAtt} />
+          </button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="card">
