@@ -1,13 +1,13 @@
 // import produce from 'immer';
-import homeReducer, { initialState } from '../reducer';
+import homeReducer, { initialState } from '../home-reducer';
 import {
-  GET_SANKEY_DATA,
-  GET_SANKEY_DATA_SUCCESS,
-  GET_SANKEY_DATA_ERROR,
+  GET_RECORD_DATA,
+  GET_RECORD_DATA_SUCCESS,
+  GET_RECORD_DATA_ERROR,
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
   ADD_ATT_RECORD_DATA,
-} from '../constants';
+} from '../home-constants';
 
 import {
   NODE_1,
@@ -47,7 +47,7 @@ describe('homeReducer', () => {
 
   it('fetching data from api', () => {
     const expectedResult = initialState;
-    expect(homeReducer(initialState, { type: GET_SANKEY_DATA })).toEqual(
+    expect(homeReducer(initialState, { type: GET_RECORD_DATA })).toEqual(
       expectedResult,
     );
   });
@@ -63,7 +63,7 @@ describe('homeReducer', () => {
     };
     state = expectedResult;
     const actionObj = {
-      type: GET_SANKEY_DATA_SUCCESS,
+      type: GET_RECORD_DATA_SUCCESS,
       payload: { income: INCOME_1, expense: EXPENSE_1 },
     };
     expect(homeReducer(initialState, actionObj)).toEqual(expectedResult);
@@ -76,7 +76,7 @@ describe('homeReducer', () => {
       isLoaded: true,
     };
     const actionObj = {
-      type: GET_SANKEY_DATA_ERROR,
+      type: GET_RECORD_DATA_ERROR,
       payload: {},
     };
     expect(homeReducer(initialState, actionObj)).toEqual(expectedResult);

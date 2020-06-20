@@ -6,13 +6,13 @@
 
 import {
   DEFAULT_ACTION,
-  GET_SANKEY_DATA,
-  GET_SANKEY_DATA_SUCCESS,
-  GET_SANKEY_DATA_ERROR,
+  GET_RECORD_DATA,
+  GET_RECORD_DATA_SUCCESS,
+  GET_RECORD_DATA_ERROR,
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
   ADD_ATT_RECORD_DATA,
-} from './constants';
+} from './home-constants';
 
 const defaultAction = () => ({
   type: DEFAULT_ACTION,
@@ -23,17 +23,17 @@ const editRecordValuesAction = payload => ({
   payload,
 });
 
-const loadSankeyData = () => ({
-  type: GET_SANKEY_DATA,
+const loadRecordData = () => ({
+  type: GET_RECORD_DATA,
 });
 
-const setSankeyData = payload => ({
-  type: GET_SANKEY_DATA_SUCCESS,
+const setRecordData = payload => ({
+  type: GET_RECORD_DATA_SUCCESS,
   payload,
 });
 
-const setSankeyDataError = payload => ({
-  type: GET_SANKEY_DATA_ERROR,
+const setRecordDataError = payload => ({
+  type: GET_RECORD_DATA_ERROR,
   payload,
 });
 
@@ -49,9 +49,9 @@ const addRecordAttributeAction = payload => ({
 
 export {
   defaultAction,
-  loadSankeyData,
-  setSankeyData,
-  setSankeyDataError,
+  loadRecordData,
+  setRecordData,
+  setRecordDataError,
   editRecordValuesAction,
   removeRecordAttributeAction,
   addRecordAttributeAction,

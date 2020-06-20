@@ -1,6 +1,6 @@
 const URL = 'https://5ee2faa18b27f300160951b4.mockapi.io/api/data/';
 
-const fetchSankeyData = async () => {
+const fetchRecordData = async () => {
   const response = await Promise.all([
     fetch(`${URL}income`),
     fetch(`${URL}expense`),
@@ -15,4 +15,4 @@ const fetchSankeyData = async () => {
   };
 };
 
-export { fetchSankeyData };
+export { fetchRecordData };

@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RecordAttribute /> Should render and match the snapshot 1`] = `
+<div
+  className="row undefined"
+>
+  <div
+    className="col-sm-5"
+  >
+    <FormattedMessage
+      defaultMessage="Operations"
+      id="app.components.RecordAttribute.operations"
+      values={Object {}}
+    />
+  </div>
+  <div
+    className="col-sm-5"
+  >
+    <input
+      className="form-control"
+      onChange={[Function]}
+      type="number"
+      value={1000}
+    />
+  </div>
+  <div
+    className="col-sm-2"
+  >
+    <button
+      className="btn btn-light"
+      onClick={[Function]}
+      type="button"
+    >
+      <ForwardRef
+        color="currentColor"
+        size={24}
+      />
+    </button>
+  </div>
+</div>
+`;
