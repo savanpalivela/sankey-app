@@ -4,20 +4,18 @@
  *
  */
 import produce from 'immer';
-import GetSankeyData from '../../utils/adapters/sankeyData';
+
 import {
   DEFAULT_ACTION,
-  GET_SANKEY_DATA,
-  GET_SANKEY_DATA_SUCCESS,
-  GET_SANKEY_DATA_ERROR,
+  GET_RECORD_DATA,
+  GET_RECORD_DATA_SUCCESS,
+  GET_RECORD_DATA_ERROR,
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
   ADD_ATT_RECORD_DATA,
-} from './constants';
+} from './home-constants';
 
 export const initialState = {
-  nodes: [],
-  links: [],
   income: [],
   expense: [],
   isLoaded: false,
@@ -28,20 +26,16 @@ export const initialState = {
 const homeReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case GET_SANKEY_DATA:
+      case GET_RECORD_DATA:
         break;
-      case GET_SANKEY_DATA_SUCCESS: {
+      case GET_RECORD_DATA_SUCCESS: {
         const { income, expense } = action.payload;
-        const { nodes, links } = GetSankeyData(income, expense);
-        // console.log('reach', GetSankeyData(income, expense));
-        draft.nodes = nodes;
-        draft.links = links;
         draft.income = income;
         draft.expense = expense;
         draft.isLoaded = true;
         break;
       }
-      case GET_SANKEY_DATA_ERROR:
+      case GET_RECORD_DATA_ERROR:
         draft.nodes = [];
         draft.links = [];
         draft.income = [];
@@ -62,9 +56,6 @@ const homeReducer = (state = initialState, action) =>
         }
         draft.income = income;
         draft.expense = expense;
-        const { nodes, links } = GetSankeyData(income, expense);
-        draft.nodes = nodes;
-        draft.links = links;
         break;
       }
 
@@ -78,9 +69,6 @@ const homeReducer = (state = initialState, action) =>
         }
         draft.income = income;
         draft.expense = expense;
-        const { nodes, links } = GetSankeyData(income, expense);
-        draft.nodes = nodes;
-        draft.links = links;
         break;
       }
 
@@ -94,9 +82,6 @@ const homeReducer = (state = initialState, action) =>
         }
         draft.income = income;
         draft.expense = expense;
-        const { nodes, links } = GetSankeyData(income, expense);
-        draft.nodes = nodes;
-        draft.links = links;
         break;
       }
 

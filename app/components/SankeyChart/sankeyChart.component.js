@@ -8,13 +8,15 @@ import React, { useState } from 'react';
 import { Sankey, Hint } from 'react-vis';
 import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
+import GetSankeyData from '../../utils/adapters/sankeyData';
 
-import styles from './styles.scss';
+import styles from './sankeyChart.styles.scss';
 
-import messages from './messages';
+import messages from './sankeyChart-messages';
 
-function SankeyChart({ nodes, links, intl }) {
+function SankeyChart({ income, expense, intl }) {
   const [activeLink, setActiveLink] = useState(null);
+  const { nodes, links } = GetSankeyData(income, expense);
   // const intl = useIntl();
   const renderHint = () => {
     // calculate center x,y position of link for positioning of hint
@@ -59,8 +61,8 @@ function SankeyChart({ nodes, links, intl }) {
 }
 
 SankeyChart.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.object).isRequired,
-  nodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  income: PropTypes.arrayOf(PropTypes.object).isRequired,
+  expense: PropTypes.arrayOf(PropTypes.object).isRequired,
   intl: intlShape.isRequired,
 };
 
