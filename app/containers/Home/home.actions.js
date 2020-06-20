@@ -9,18 +9,16 @@ import {
   GET_RECORD_DATA,
   GET_RECORD_DATA_SUCCESS,
   GET_RECORD_DATA_ERROR,
-  UPDATE_RECORD_DATA,
-  REMOVE_ATT_RECORD_DATA,
-  ADD_ATT_RECORD_DATA,
+  UPDATE_EXPENSE_RECORD,
+  ADD_EXPENSE_RECORD,
+  REMOVE_EXPENSE_RECORD,
+  UPDATE_INCOME_RECORD,
+  ADD_INCOME_RECORD,
+  REMOVE_INCOME_RECORD,
 } from './home.constants';
 
 const defaultAction = () => ({
   type: DEFAULT_ACTION,
-});
-
-const editRecordValuesAction = payload => ({
-  type: UPDATE_RECORD_DATA,
-  payload,
 });
 
 const loadRecordData = () => ({
@@ -37,13 +35,51 @@ const setRecordDataError = payload => ({
   payload,
 });
 
-const removeRecordAttributeAction = payload => ({
-  type: REMOVE_ATT_RECORD_DATA,
+/*
+ * Payload - {incomeIndex, value}
+ */
+const updateIncomeRecordValueAction = payload => ({
+  type: UPDATE_INCOME_RECORD,
   payload,
 });
 
-const addRecordAttributeAction = payload => ({
-  type: ADD_ATT_RECORD_DATA,
+/*
+ * Payload - {incomeIndex, expenseIndex, value}
+ */
+const updateExpenseRecordValueAction = payload => ({
+  type: UPDATE_EXPENSE_RECORD,
+  payload,
+});
+
+/*
+ * Payload - {incomeKeyText, value}
+ */
+const addIncomeRecordAction = payload => ({
+  type: ADD_INCOME_RECORD,
+  payload,
+});
+
+/*
+ * Payload - {incomeIndex, expenseKeyText, value}
+ */
+const addExpenseRecordAction = payload => ({
+  type: ADD_EXPENSE_RECORD,
+  payload,
+});
+
+/*
+ * Payload - {incomeIndex}
+ */
+const removeIncomeRecordAction = payload => ({
+  type: REMOVE_INCOME_RECORD,
+  payload,
+});
+
+/*
+ * Payload - {incomeIndex, expenseIndex}
+ */
+const removeExpenseRecordAction = payload => ({
+  type: REMOVE_EXPENSE_RECORD,
   payload,
 });
 
@@ -52,7 +88,10 @@ export {
   loadRecordData,
   setRecordData,
   setRecordDataError,
-  editRecordValuesAction,
-  removeRecordAttributeAction,
-  addRecordAttributeAction,
+  updateIncomeRecordValueAction,
+  updateExpenseRecordValueAction,
+  addIncomeRecordAction,
+  addExpenseRecordAction,
+  removeIncomeRecordAction,
+  removeExpenseRecordAction,
 };

@@ -24,7 +24,7 @@ function RecordAttribute({
 
   return (
     <div className={`row ${styles.attibuteItem}`}>
-      <div className="col-sm-5">
+      <div className={`col-sm-5 ${styles.recordKeyText}`}>
         <FormattedMessage {...messages[keyText]} />
       </div>
       <div className="col-sm-5">

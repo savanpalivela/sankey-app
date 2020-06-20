@@ -1,93 +1,155 @@
 /*
- * Convert Income and expense data to Sankey data
+ * Convert Income - expense mapping data to Sankey data
  *
  * Output is expected as 3 tiers
  *
- * Inflow - Income
- * Cashflow
- * Outflow - Expense & profit
- *
+ * Income is mapped to mulitiple expense
+ * Gap in the mapping is pointed to pool node
  */
 
-export function GetDiffListValue(arr1, arr2) {
-  const diff =
-    arr1
-      .map(i => i.value)
-      .reduce((main, item) => {
-        let ret = main;
-        ret += item;
-        return ret;
-      }, 0) -
-    arr2
-      .map(i => i.value)
-      .reduce((main, item) => {
-        let ret = main;
-        ret += item;
-        return ret;
-      }, 0);
-  return diff;
+import { uniq, forEach } from 'lodash';
+
+const LOSS_NODE_KEY = 'loss';
+const PROFILE_NODE_KEY = 'profit';
+
+const COLOR_PALETTE = ['#0C6980', '#00A8A8', '#2EB5E0', '#4C5270', '#70B692'];
+
+export function GetColor(i) {
+  return COLOR_PALETTE[i % COLOR_PALETTE.length];
 }
 
-export default function GetSankeyData(income, expense) {
-  const nodes = [];
-  const links = [];
+export function GetListOfExpenseType(dataArg) {
+  const expenseKeys = [];
+  dataArg.forEach(item => {
+    expenseKeys.push(...item.valueMap.map(obj => obj.expenseType));
+  });
+  return uniq(expenseKeys);
+}
 
-  const middleNode = {
-    name: 'cashFlow',
-  };
-  const diff = GetDiffListValue(income, expense);
-  const middleNodeTarget = income.length + (diff < 0 ? 1 : 0);
-  // traverse income to create nodes links
-  income.forEach((element, index) => {
-    nodes.push({
-      name: element.key,
-    });
-    links.push({
-      source: index,
-      target: middleNodeTarget,
-      value: element.value || 0,
-    });
+export function GetNodeKeyIdMap(incomeKeys, expenseKeys, diff) {
+  const retObj = {};
+  let counter = 0; // nodeId
+  incomeKeys.forEach(item => {
+    retObj[item] = counter;
+    counter += 1;
   });
 
-  // appending lose Node if condition is satisfied
   if (diff < 0) {
-    nodes.push({
-      name: 'lose',
-    });
-    links.push({
-      source: middleNodeTarget - 1,
-      target: middleNodeTarget,
-      value: Math.abs(diff),
-    });
+    retObj[LOSS_NODE_KEY] = counter;
+    counter += 1;
   }
 
-  // appending middle Node
-  nodes.push(middleNode);
-  // traverse expense to create nodes links
-  expense.forEach((element, index) => {
-    nodes.push({
-      name: element.key,
-    });
-    links.push({
-      source: middleNodeTarget,
-      target: middleNodeTarget + index + 1,
-      value: element.value || 0,
-    });
+  retObj.cashpool = counter;
+  counter += 1;
+
+  expenseKeys.forEach(item => {
+    retObj[item] = counter;
+    counter += 1;
   });
 
   if (diff > 0) {
-    nodes.push({
-      name: 'profit',
+    retObj[PROFILE_NODE_KEY] = counter;
+    counter += 1;
+  }
+  return retObj;
+}
+
+export function GetNodeArr(nodeKeyIdMap) {
+  const nodeArr = Array(Object.keys(nodeKeyIdMap).length);
+  forEach(nodeKeyIdMap, (item, key) => {
+    nodeArr[item] = { name: key, color: GetColor(item) };
+  });
+  return nodeArr;
+}
+
+export function GetDiffValue(dataArg) {
+  return dataArg.reduce((main, item) => {
+    let ret = main;
+    const expenseSum = item.valueMap.reduce((m, i) => {
+      let r = m;
+      r += i.value;
+      return r;
+    }, 0);
+    ret += item.value - expenseSum;
+
+    return ret;
+  }, 0);
+}
+
+export function GetLinkArr(dataArg, nodeKeyIdMap, diff) {
+  const linkArr = [];
+
+  forEach(dataArg, item => {
+    let valueGap = item.value;
+    forEach(item.valueMap, obj => {
+      if (valueGap >= 0) {
+        if (valueGap - obj.value < 0) {
+          linkArr.push({
+            source: nodeKeyIdMap[item.incomeType],
+            target: nodeKeyIdMap[obj.expenseType],
+            value: valueGap,
+            color: GetColor(nodeKeyIdMap[item.incomeType]),
+          });
+          linkArr.push({
+            source: nodeKeyIdMap.cashpool,
+            target: nodeKeyIdMap[obj.expenseType],
+            value: Math.abs(valueGap - obj.value),
+            color: GetColor(nodeKeyIdMap[obj.expenseType]),
+          });
+        } else {
+          linkArr.push({
+            source: nodeKeyIdMap[item.incomeType],
+            target: nodeKeyIdMap[obj.expenseType],
+            value: obj.value,
+            color: GetColor(nodeKeyIdMap[item.incomeType]),
+          });
+        }
+      } else {
+        linkArr.push({
+          source: nodeKeyIdMap.cashpool,
+          target: nodeKeyIdMap[obj.expenseType],
+          value: obj.value,
+          color: GetColor(nodeKeyIdMap[item.expenseType]),
+        });
+      }
+      valueGap -= obj.value;
     });
-    links.push({
-      source: middleNodeTarget,
-      target: nodes.length - 1,
+    if (valueGap >= 0) {
+      linkArr.push({
+        source: nodeKeyIdMap[item.incomeType],
+        target: nodeKeyIdMap.cashpool,
+        value: valueGap,
+        color: GetColor(nodeKeyIdMap[item.incomeType]),
+      });
+    }
+  });
+
+  if (diff > 0) {
+    linkArr.push({
+      source: nodeKeyIdMap.cashpool,
+      target: nodeKeyIdMap[PROFILE_NODE_KEY],
       value: diff,
     });
   }
 
+  if (diff < 0) {
+    linkArr.push({
+      source: nodeKeyIdMap[LOSS_NODE_KEY],
+      target: nodeKeyIdMap.cashpool,
+      value: Math.abs(diff),
+    });
+  }
+
+  return linkArr;
+}
+
+export default function GetSankeyData(data) {
+  const incomeKeys = data.map(item => item.incomeType);
+  const expenseKeys = GetListOfExpenseType(data);
+  const diff = GetDiffValue(data);
+  const nodeKeyIdMap = GetNodeKeyIdMap(incomeKeys, expenseKeys, diff);
   return {
-    nodes,
-    links,
+    nodes: GetNodeArr(nodeKeyIdMap),
+    links: GetLinkArr(data, nodeKeyIdMap, diff),
   };
 }

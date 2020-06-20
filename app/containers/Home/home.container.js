@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -14,21 +14,24 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import {
-  makeSelectIsLoaded,
-  makeSelectIncome,
-  makeSelectExpense,
-} from './home.selectors';
+import { makeSelectIsLoaded, makeSelectRecords } from './home.selectors';
 import reducer from './home.reducer';
 import saga from './home.saga';
 import messages from './home.messages';
 import SankeyChart from '../../components/SankeyChart';
 import Record from '../../components/Record';
 import {
+  getIncomeRecords,
+  getExpenseRecords,
+} from '../../utils/adapters/dataUtils';
+import {
   loadRecordData,
-  editRecordValuesAction,
-  removeRecordAttributeAction,
-  addRecordAttributeAction,
+  updateIncomeRecordValueAction,
+  updateExpenseRecordValueAction,
+  addIncomeRecordAction,
+  addExpenseRecordAction,
+  removeIncomeRecordAction,
+  removeExpenseRecordAction,
 } from './home.actions';
 import {
   INCOME_RECORD_ATT_KEYS,
@@ -38,11 +41,13 @@ import styles from './home.styles.scss';
 export function Home({
   loadData,
   isLoaded,
-  income,
-  expense,
-  editRecordValue,
-  removeRecordAttribute,
-  addRecordAttribute,
+  records,
+  updateIncomeRecordValue,
+  updateExpenseRecordValue,
+  addIncomeRecord,
+  addExpenseRecord,
+  removeIncomeRecord,
+  removeExpenseRecord,
 }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
@@ -52,8 +57,13 @@ export function Home({
     }
   });
 
-  const handleValueChange = (recordType, key, value) => {
-    editRecordValue(recordType, key, value);
+  const [selectedIncomeIndex, setSelectedIncomeIndex] = useState(0);
+  const handleValueChange = (recordType, index, value) => {
+    if (recordType === 'income') {
+      updateIncomeRecordValue(index, value);
+    } else if (recordType === 'expense') {
+      updateExpenseRecordValue(selectedIncomeIndex, index, value);
+    }
   };
 
   return (
@@ -65,60 +75,67 @@ export function Home({
       <h3 className={styles.pageTitle}>
         <FormattedMessage {...messages.header} />
       </h3>
-      {income && income.length && (
-        <SankeyChart income={income} expense={expense} />
+      {records && records.length && <SankeyChart records={records} />}
+      {records && records.length && (
+        <div className="row">
+          <div className="col-sm-6">
+            <Record
+              title="income"
+              data={getIncomeRecords(records)}
+              attributeKeyList={INCOME_RECORD_ATT_KEYS}
+              handleValueChange={(index, val) => {
+                handleValueChange('income', index, val);
+              }}
+              handleRemoveAttRecord={index => {
+                removeIncomeRecord(index);
+              }}
+              handleAddAttRecord={({ key, value }) => {
+                addIncomeRecord(key, value);
+              }}
+              enableAttSelection
+              onRowSelect={i => {
+                setSelectedIncomeIndex(i);
+              }}
+              selectedAttrubiteIndex={selectedIncomeIndex}
+            />
+          </div>
+          <div className="col-sm-6">
+            <Record
+              title="expense"
+              titleSecondary={records[selectedIncomeIndex].incomeType}
+              data={getExpenseRecords(records[selectedIncomeIndex].valueMap)}
+              attributeKeyList={EXPENSE_RECORD_ATT_KEYS}
+              handleValueChange={(index, val) => {
+                handleValueChange('expense', index, val);
+              }}
+              handleRemoveAttRecord={index => {
+                removeExpenseRecord(selectedIncomeIndex, index);
+              }}
+              handleAddAttRecord={({ key, value }) => {
+                addExpenseRecord(selectedIncomeIndex, key, value);
+              }}
+            />
+          </div>
+        </div>
       )}
-      <div className="row">
-        <div className="col-sm-6">
-          <Record
-            title="income"
-            data={income}
-            attributeKeyList={INCOME_RECORD_ATT_KEYS}
-            handleValueChange={(key, val) => {
-              handleValueChange('income', key, val);
-            }}
-            handleRemoveAttRecord={index => {
-              removeRecordAttribute('income', index);
-            }}
-            handleAddAttRecord={attObj => {
-              addRecordAttribute('income', attObj);
-            }}
-          />
-        </div>
-        <div className="col-sm-6">
-          <Record
-            title="expense"
-            data={expense}
-            attributeKeyList={EXPENSE_RECORD_ATT_KEYS}
-            handleValueChange={(key, val) => {
-              handleValueChange('expense', key, val);
-            }}
-            handleRemoveAttRecord={index => {
-              removeRecordAttribute('expense', index);
-            }}
-            handleAddAttRecord={attObj => {
-              addRecordAttribute('expense', attObj);
-            }}
-          />
-        </div>
-      </div>
     </div>
   );
 }
 
 Home.propTypes = {
-  expense: PropTypes.arrayOf(PropTypes.object).isRequired,
-  income: PropTypes.arrayOf(PropTypes.object).isRequired,
+  records: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoaded: PropTypes.bool.isRequired,
   loadData: PropTypes.func.isRequired,
-  removeRecordAttribute: PropTypes.func.isRequired,
-  addRecordAttribute: PropTypes.func.isRequired,
-  editRecordValue: PropTypes.func.isRequired,
+  updateIncomeRecordValue: PropTypes.func.isRequired,
+  updateExpenseRecordValue: PropTypes.func.isRequired,
+  addIncomeRecord: PropTypes.func.isRequired,
+  addExpenseRecord: PropTypes.func.isRequired,
+  removeIncomeRecord: PropTypes.func.isRequired,
+  removeExpenseRecord: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  income: makeSelectIncome(),
-  expense: makeSelectExpense(),
+  records: makeSelectRecords(),
   isLoaded: makeSelectIsLoaded(),
 });
 
@@ -127,27 +144,54 @@ function mapDispatchToProps(dispatch) {
     loadData: () => {
       dispatch(loadRecordData());
     },
-    editRecordValue: (recordType, key, value) => {
-      const payload = {
-        recordType,
-        key,
-        value,
-      };
-      dispatch(editRecordValuesAction(payload));
+    updateIncomeRecordValue: (incomeIndex, value) => {
+      dispatch(
+        updateIncomeRecordValueAction({
+          incomeIndex,
+          value,
+        }),
+      );
     },
-    removeRecordAttribute: (recordType, index) => {
-      const payload = {
-        recordType,
-        index,
-      };
-      dispatch(removeRecordAttributeAction(payload));
+    updateExpenseRecordValue: (incomeIndex, expenseIndex, value) => {
+      dispatch(
+        updateExpenseRecordValueAction({
+          incomeIndex,
+          expenseIndex,
+          value,
+        }),
+      );
     },
-    addRecordAttribute: (recordType, attObj) => {
-      const payload = {
-        recordType,
-        attObj,
-      };
-      dispatch(addRecordAttributeAction(payload));
+    addIncomeRecord: (incomeKeyText, value) => {
+      dispatch(
+        addIncomeRecordAction({
+          incomeKeyText,
+          value,
+        }),
+      );
+    },
+    addExpenseRecord: (incomeIndex, expenseKeyText, value) => {
+      dispatch(
+        addExpenseRecordAction({
+          incomeIndex,
+          expenseKeyText,
+          value,
+        }),
+      );
+    },
+    removeIncomeRecord: incomeKeyText => {
+      dispatch(
+        removeIncomeRecordAction({
+          incomeKeyText,
+        }),
+      );
+    },
+    removeExpenseRecord: (incomeIndex, expenseIndex) => {
+      dispatch(
+        removeExpenseRecordAction({
+          incomeIndex,
+          expenseIndex,
+        }),
+      );
     },
   };
 }

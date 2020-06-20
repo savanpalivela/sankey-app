@@ -32,10 +32,10 @@ const makeSelectLink = () =>
     selectHomeDomain,
     substate => substate.links,
   );
-const makeSelectIncome = () =>
+const makeSelectRecords = () =>
   createSelector(
     selectHomeDomain,
-    substate => substate.income,
+    substate => substate.records,
   );
 const makeSelectExpense = () =>
   createSelector(
@@ -55,6 +55,6 @@ export {
   makeSelectNode,
   makeSelectLink,
   makeSelectIsLoaded,
-  makeSelectIncome,
+  makeSelectRecords,
   makeSelectExpense,
 };

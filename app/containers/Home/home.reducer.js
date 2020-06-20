@@ -10,14 +10,16 @@ import {
   GET_RECORD_DATA,
   GET_RECORD_DATA_SUCCESS,
   GET_RECORD_DATA_ERROR,
-  UPDATE_RECORD_DATA,
-  REMOVE_ATT_RECORD_DATA,
-  ADD_ATT_RECORD_DATA,
+  UPDATE_EXPENSE_RECORD,
+  ADD_EXPENSE_RECORD,
+  REMOVE_EXPENSE_RECORD,
+  UPDATE_INCOME_RECORD,
+  ADD_INCOME_RECORD,
+  REMOVE_INCOME_RECORD,
 } from './home.constants';
 
 export const initialState = {
-  income: [],
-  expense: [],
+  records: [],
   isLoaded: false,
   errorMsg: '',
 };
@@ -29,59 +31,70 @@ const homeReducer = (state = initialState, action) =>
       case GET_RECORD_DATA:
         break;
       case GET_RECORD_DATA_SUCCESS: {
-        const { income, expense } = action.payload;
-        draft.income = income;
-        draft.expense = expense;
+        const { records } = action.payload;
+        draft.records = records;
         draft.isLoaded = true;
         break;
       }
-      case GET_RECORD_DATA_ERROR:
-        draft.nodes = [];
-        draft.links = [];
-        draft.income = [];
-        draft.expense = [];
+
+      case GET_RECORD_DATA_ERROR: {
+        draft.records = [];
         draft.isLoaded = true;
         draft.errorMsg = action.payload;
         break;
+      }
 
-      case UPDATE_RECORD_DATA: {
-        const income = [...state.income];
-        const expense = [...state.expense];
-        if (action.payload.recordType === 'income') {
-          const obj = income.find(item => item.key === action.payload.key);
-          obj.value = action.payload.value;
-        } else if (action.payload.recordType === 'expense') {
-          const obj = expense.find(item => item.key === action.payload.key);
-          obj.value = action.payload.value;
-        }
-        draft.income = income;
-        draft.expense = expense;
+      case UPDATE_INCOME_RECORD: {
+        const records = [...state.records];
+        records[action.payload.incomeIndex].value = action.payload.value;
+        draft.records = records;
         break;
       }
 
-      case REMOVE_ATT_RECORD_DATA: {
-        const income = [...state.income];
-        const expense = [...state.expense];
-        if (action.payload.recordType === 'income') {
-          income.splice(action.payload.index, 1);
-        } else if (action.payload.recordType === 'expense') {
-          expense.splice(action.payload.index, 1);
-        }
-        draft.income = income;
-        draft.expense = expense;
+      case UPDATE_EXPENSE_RECORD: {
+        const records = [...state.records];
+        records[action.payload.incomeIndex].valueMap[
+          action.payload.expenseIndex
+        ].value = action.payload.value;
+        draft.records = records;
         break;
       }
 
-      case ADD_ATT_RECORD_DATA: {
-        const income = [...state.income];
-        const expense = [...state.expense];
-        if (action.payload.recordType === 'income') {
-          income.push(action.payload.attObj);
-        } else if (action.payload.recordType === 'expense') {
-          expense.push(action.payload.attObj);
-        }
-        draft.income = income;
-        draft.expense = expense;
+      case ADD_INCOME_RECORD: {
+        const records = [...state.records];
+        records.push({
+          incomeType: action.payload.incomeKeyText,
+          value: action.payload.value,
+          valueMap: [],
+        });
+        draft.records = records;
+        break;
+      }
+
+      case ADD_EXPENSE_RECORD: {
+        const records = [...state.records];
+        records[action.payload.incomeIndex].valueMap.push({
+          expenseType: action.payload.expenseKeyText,
+          value: action.payload.value,
+        });
+        draft.records = records;
+        break;
+      }
+
+      case REMOVE_INCOME_RECORD: {
+        const records = [...state.records];
+        records.splice(action.payload.incomeIndex, 1);
+        draft.records = records;
+        break;
+      }
+
+      case REMOVE_EXPENSE_RECORD: {
+        const records = [...state.records];
+        records[action.payload.incomeIndex].valueMap.splice(
+          action.payload.expenseIndex,
+          1,
+        );
+        draft.records = records;
         break;
       }
 
