@@ -12,7 +12,7 @@ import GetSankeyData from '../../utils/adapters/sankeyData';
 
 import styles from './sankeyChart.styles.scss';
 
-import messages from './sankeyChart-messages';
+import messages from './sankeyChart.messages';
 
 function SankeyChart({ income, expense, intl }) {
   const [activeLink, setActiveLink] = useState(null);

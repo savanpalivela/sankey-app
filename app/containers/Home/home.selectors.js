@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { initialState } from './home-reducer';
+import { initialState } from './home.reducer';
 
 /**
  * Direct selector to the home state domain

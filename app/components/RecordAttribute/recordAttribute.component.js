@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Trash } from 'react-bootstrap-icons';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './recordAttribute-messages';
+import messages from './recordAttribute.messages';
 import styles from './recordAttribute.styles.scss';
 
 function RecordAttribute({

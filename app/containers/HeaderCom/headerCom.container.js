@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 // import messages from './headerCom-messages';
 import styles from './headerCom.styles.scss';
 import centimeLogo from '../../images/centime-logo.png';
-import { changeLocale } from '../LanguageProvider/languageProvider-actions';
+import { changeLocale } from '../LanguageProvider/languageProvider.actions';
 
 function HeaderCom({ changeLocaleHandler }) {
   return (

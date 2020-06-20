@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 import { Plus } from 'react-bootstrap-icons';
-import messages from './record-messages';
+import messages from './record.messages';
 import RecordAttribute from '../RecordAttribute';
 
 function Record({

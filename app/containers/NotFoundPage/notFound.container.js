@@ -8,7 +8,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import messages from './notFound-messages';
+import messages from './notFound.messages';
 
 export default function NotFound() {
   return (

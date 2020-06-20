@@ -13,7 +13,7 @@ import {
   UPDATE_RECORD_DATA,
   REMOVE_ATT_RECORD_DATA,
   ADD_ATT_RECORD_DATA,
-} from './home-constants';
+} from './home.constants';
 
 export const initialState = {
   income: [],

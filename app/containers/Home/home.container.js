@@ -18,10 +18,10 @@ import {
   makeSelectIsLoaded,
   makeSelectIncome,
   makeSelectExpense,
-} from './home-selectors';
-import reducer from './home-reducer';
-import saga from './home-saga';
-import messages from './home-messages';
+} from './home.selectors';
+import reducer from './home.reducer';
+import saga from './home.saga';
+import messages from './home.messages';
 import SankeyChart from '../../components/SankeyChart';
 import Record from '../../components/Record';
 import {
@@ -29,11 +29,11 @@ import {
   editRecordValuesAction,
   removeRecordAttributeAction,
   addRecordAttributeAction,
-} from './home-actions';
+} from './home.actions';
 import {
   INCOME_RECORD_ATT_KEYS,
   EXPENSE_RECORD_ATT_KEYS,
-} from './home-constants';
+} from './home.constants';
 import styles from './home.styles.scss';
 export function Home({
   loadData,
