@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HeaderCom /> should render and match the snapshot 1`] = `
+<div
+  className="undefined row"
+>
+  <div
+    className="col-sm-2"
+  >
+    <img
+      alt="logo"
+      src="IMAGE_MOCK"
+    />
+  </div>
+  <div
+    className="col-sm-8"
+  />
+  <div
+    className="undefined col-sm-2"
+  >
+    <button
+      className="btn btn-default"
+      onClick={[Function]}
+      type="button"
+    >
+      EN
+    </button>
+    <button
+      className="btn btn-default"
+      onClick={[Function]}
+      type="button"
+    >
+      DE
+    </button>
+  </div>
+</div>
+`;

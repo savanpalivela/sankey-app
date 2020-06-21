@@ -8,20 +8,22 @@
 
 import React from 'react';
 import { render } from 'react-testing-library';
-import { IntlProvider } from 'react-intl';
-// import 'jest-dom/extend-expect'; // add some helpful assertions
+import ShallowRenderer from 'react-test-renderer/shallow';
 
-import HeaderCom from '../index';
-import { DEFAULT_LOCALE } from '../../../i18n';
+import { HeaderCom } from '../headerCom.container';
+
+const renderer = new ShallowRenderer();
 
 describe('<HeaderCom />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(
-      <IntlProvider locale={DEFAULT_LOCALE}>
-        <HeaderCom languageSelect={() => {}} />
-      </IntlProvider>,
-    );
+    render(<HeaderCom changeLocaleHandler={() => {}} />);
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should render and match the snapshot', () => {
+    renderer.render(<HeaderCom changeLocaleHandler={() => {}} />);
+    const renderedOutput = renderer.getRenderOutput();
+    expect(renderedOutput).toMatchSnapshot();
   });
 });

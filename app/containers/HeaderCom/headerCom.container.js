@@ -15,7 +15,7 @@ import styles from './headerCom.styles.scss';
 import centimeLogo from '../../images/centime-logo.png';
 import { changeLocale } from '../LanguageProvider/languageProvider.actions';
 
-function HeaderCom({ changeLocaleHandler }) {
+export function HeaderCom({ changeLocaleHandler }) {
   return (
     <div className={`${styles.headerContainer} row`}>
       <div className="col-sm-2">

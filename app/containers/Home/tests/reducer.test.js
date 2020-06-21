@@ -26,7 +26,6 @@ import {
 describe('homeReducer', () => {
   let state = initialState;
   beforeEach(() => {
-    console.log('reach before each');
     state = JSON.parse(
       JSON.stringify({
         ...initialState,
@@ -96,7 +95,6 @@ describe('homeReducer', () => {
       type: UPDATE_EXPENSE_RECORD,
       payload: { incomeIndex: 0, expenseIndex: 1, value: 130 },
     };
-    console.log('reach pdating expense', state);
     expect(homeReducer(state, actionObj)).toEqual(expectedResult);
   });
 
