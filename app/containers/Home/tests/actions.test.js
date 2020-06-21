@@ -1,5 +1,5 @@
-import { defaultAction } from '../actions';
-import { DEFAULT_ACTION } from '../constants';
+import { defaultAction } from '../home.actions';
+import { DEFAULT_ACTION } from '../home.constants';
 
 describe('Home actions', () => {
   describe('Default Action', () => {

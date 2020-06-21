@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Trash } from 'react-bootstrap-icons';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './recordAttribute-messages';
+import messages from './recordAttribute.messages';
 import styles from './recordAttribute.styles.scss';
 
 function RecordAttribute({
@@ -24,11 +24,13 @@ function RecordAttribute({
 
   return (
     <div className={`row ${styles.attibuteItem}`}>
-      <div className="col-sm-5">
+      <div className={`col-sm-5 ${styles.recordKeyText}`}>
         <FormattedMessage {...messages[keyText]} />
       </div>
       <div className="col-sm-5">
         <input
+          data-testid="record-value"
+          name="record-value"
           className="form-control"
           onChange={handleChange}
           value={value}
@@ -37,9 +39,14 @@ function RecordAttribute({
       </div>
       <div className="col-sm-2">
         <button
+          data-testid="remove-btn"
           className="btn btn-light"
           type="button"
-          onClick={handleRemoveAttRecord}
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleRemoveAttRecord();
+          }}
         >
           <Trash size={24} />
         </button>

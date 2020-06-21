@@ -65,4 +65,12 @@ export default defineMessages({
     id: `${scope}.cashFlow`,
     defaultMessage: 'Cash Flow',
   },
+  loss: {
+    id: `${scope}.lose`,
+    defaultMessage: 'Lose',
+  },
+  cashpool: {
+    id: `${scope}.cashpool`,
+    defaultMessage: 'Cash Pool',
+  },
 });

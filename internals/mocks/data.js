@@ -1,344 +1,621 @@
-const NODE_1 = [
+const DATA = [
   {
-    name: 'a',
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
   },
   {
-    name: 'b',
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
   },
   {
-    name: 'cashFlow',
-  },
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'profit',
-  },
-];
-const NODE_2 = [
-  {
-    name: 'a',
-  },
-  {
-    name: 'b',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'profit',
-  },
-];
-const NODE_3 = [
-  {
-    name: 'a',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'profit',
-  },
-];
-
-const NODE_4 = [
-  {
-    name: 'a',
-  },
-  {
-    name: 'b',
-  },
-  {
-    name: 'c',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'profit',
-  },
-];
-
-const LINK_1 = [
-  {
-    source: 0,
-    target: 2,
-    value: 100,
-  },
-  {
-    source: 1,
-    target: 2,
-    value: 150,
-  },
-  {
-    source: 2,
-    target: 3,
-    value: 100,
-  },
-  {
-    source: 2,
-    target: 4,
-    value: 50,
-  },
-  {
-    source: 2,
-    target: 5,
-    value: 100,
-  },
-];
-const LINK_2 = [
-  {
-    source: 0,
-    target: 2,
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
   },
   {
-    source: 1,
-    target: 2,
-    value: 150,
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
+  },
+];
+
+const DATA_1 = [
+  {
+    incomeType: 'services',
+    value: 400,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
   },
   {
-    source: 2,
-    target: 3,
-    value: 100,
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
   },
   {
-    source: 2,
-    target: 4,
-    value: 50,
-  },
-  {
-    source: 2,
-    target: 5,
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
+  },
+  {
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
   },
 ];
-const LINK_3 = [
+
+const DATA_2 = [
   {
-    source: 0,
-    target: 1,
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 130,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
+  },
+  {
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
+  },
+  {
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
   },
   {
-    source: 1,
-    target: 2,
-    value: 100,
-  },
-  {
-    source: 1,
-    target: 3,
-    value: 50,
-  },
-  {
-    source: 1,
-    target: 4,
-    value: 850,
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
   },
 ];
 
-const LINK_4 = [
+const DATA_3 = [
   {
-    source: 0,
-    target: 3,
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
+  },
+  {
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
   },
   {
-    source: 1,
-    target: 3,
-    value: 150,
-  },
-  {
-    source: 2,
-    target: 3,
-    value: 250,
-  },
-  {
-    source: 3,
-    target: 4,
-    value: 100,
-  },
-  {
-    source: 3,
-    target: 5,
-    value: 50,
-  },
-  {
-    source: 3,
-    target: 6,
-    value: 1250,
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
   },
 ];
 
-const INCOME_1 = [
+const DATA_4 = [
   {
-    key: 'a',
-    value: 100,
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
   },
   {
-    key: 'b',
-    value: 150,
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
   },
-];
-
-const INCOME_2 = [
   {
-    key: 'a',
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
   },
   {
-    key: 'b',
-    value: 150,
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
   },
 ];
 
-const INCOME_3 = [
+const DATA_5 = [
   {
-    key: 'a',
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+    ],
+  },
+  {
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
+  },
+  {
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
+  },
+  {
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
+  },
+  {
+    incomeType: 'consultation',
+    value: 300,
+    valueMap: [],
   },
 ];
 
-const INCOME_4 = [
+const DATA_6 = [
   {
-    key: 'a',
+    incomeType: 'services',
+    value: 500,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 100,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 200,
+      },
+      {
+        expenseType: 'variable',
+        value: 100,
+      },
+      {
+        expenseType: 'tax',
+        value: 300,
+      },
+    ],
+  },
+  {
+    incomeType: 'recurring',
+    value: 540,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 900,
+      },
+    ],
+  },
+  {
+    incomeType: 'project',
     value: 1000,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 1000,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 121,
+      },
+      {
+        expenseType: 'fixed',
+        value: 401,
+      },
+      {
+        expenseType: 'variable',
+        value: 101,
+      },
+    ],
   },
   {
-    key: 'b',
-    value: 150,
-  },
-  {
-    key: 'c',
-    value: 250,
+    incomeType: 'interest',
+    value: 300,
+    valueMap: [
+      {
+        expenseType: 'operations',
+        value: 20,
+      },
+      {
+        expenseType: 'nonOperating',
+        value: 30,
+      },
+      {
+        expenseType: 'fixed',
+        value: 100,
+      },
+      {
+        expenseType: 'variable',
+        value: 90,
+      },
+    ],
   },
 ];
 
-const EXPENSE_1 = [
-  {
-    key: 'y',
-    value: 100,
-  },
-  {
-    key: 'z',
-    value: 50,
-  },
-];
-
-const EXPENSE_2 = [
-  {
-    key: 'y',
-    value: 100,
-  },
-  {
-    key: 'z',
-    value: 50,
-  },
-];
-
-const EXPENSE_3 = [
-  {
-    key: 'y',
-    value: 100,
-  },
-  {
-    key: 'z',
-    value: 50,
-  },
-];
-
-const EXPENSE_4 = [
-  {
-    key: 'y',
-    value: 100,
-  },
-  {
-    key: 'z',
-    value: 50,
-  },
-];
-
-const NODE_5 = [
-  {
-    name: 'services',
-  },
-  {
-    name: 'recurring',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'operations',
-  },
-  {
-    name: 'nonOperating',
-  },
-  {
-    name: 'profit',
-  },
-];
-
-const INCOME_5 = [
-  {
-    key: 'services',
-    value: 100,
-  },
-  {
-    key: 'recurring',
-    value: 150,
-  },
-];
-
-const EXPENSE_5 = [
-  {
-    key: 'operations',
-    value: 100,
-  },
-  {
-    key: 'nonOperating',
-    value: 50,
-  },
-];
-
-export {
-  NODE_1,
-  NODE_2,
-  NODE_3,
-  LINK_1,
-  LINK_2,
-  LINK_3,
-  INCOME_1,
-  EXPENSE_1,
-  INCOME_2,
-  EXPENSE_2,
-  INCOME_3,
-  EXPENSE_3,
-  NODE_4,
-  LINK_4,
-  INCOME_4,
-  EXPENSE_4,
-  INCOME_5,
-  NODE_5,
-  EXPENSE_5,
-};
+export { DATA, DATA_1, DATA_2, DATA_3, DATA_4, DATA_5, DATA_6 };

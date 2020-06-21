@@ -1,5 +1,5 @@
-import languageProviderReducer from '../reducer';
-import { CHANGE_LOCALE } from '../constants';
+import languageProviderReducer from '../languageProvider.reducer';
+import { CHANGE_LOCALE } from '../languageProvider.constants';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('languageProviderReducer', () => {

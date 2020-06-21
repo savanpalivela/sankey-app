@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Record /> should render and match the snapshot 1`] = `
+<Record
+  attributeKeyList={
+    Array [
+      "services",
+      "recurring",
+      "project",
+      "consultation",
+      "interest",
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "key": "services",
+        "value": 500,
+      },
+      Object {
+        "key": "recurring",
+        "value": 540,
+      },
+      Object {
+        "key": "project",
+        "value": 1000,
+      },
+      Object {
+        "key": "interest",
+        "value": 300,
+      },
+    ]
+  }
+  enableAttSelection={false}
+  handleAddAttRecord={[Function]}
+  handleRemoveAttRecord={[Function]}
+  handleValueChange={[Function]}
+  onRowSelect={[Function]}
+  selectedAttrubiteIndex={-1}
+  title="income"
+  titleSecondary=""
+/>
+`;

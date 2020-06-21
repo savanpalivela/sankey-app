@@ -1,0 +1,13 @@
+@import '../../utils/styles/variables.scss';
+
+.selectableRecord {
+  margin: 10px 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.active {
+    background-color: $selected-att;
+  }
+}
