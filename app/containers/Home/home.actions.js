@@ -52,7 +52,7 @@ const updateExpenseRecordValueAction = payload => ({
 });
 
 /*
- * Payload - {incomeKeyText, value}
+ * Payload - {incomeIndex, value}
  */
 const addIncomeRecordAction = payload => ({
   type: ADD_INCOME_RECORD,

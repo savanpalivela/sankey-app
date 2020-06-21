@@ -1,140 +1,58 @@
-import GetSankeyData, { GetDiffListValue } from '../adapters/sankeyData';
+import GetSankeyData, {
+  GetLinkArr,
+  GetDiffValue,
+  GetNodeArr,
+  GetNodeKeyIdMap,
+  GetListOfExpenseType,
+} from '../adapters/sankeyData';
 
-const arr1 = [
-  {
-    key: 'a',
-    value: 100,
-  },
-  {
-    key: 'b',
-    value: 150,
-  },
-];
-
-const arr2 = [
-  {
-    key: 'y',
-    value: 100,
-  },
-  {
-    key: 'z',
-    value: 50,
-  },
-];
-
-const NODES_P = [
-  {
-    name: 'a',
-  },
-  {
-    name: 'b',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'profit',
-  },
-];
-const LINKS_P = [
-  {
-    source: 0,
-    target: 2,
-    value: 100,
-  },
-  {
-    source: 1,
-    target: 2,
-    value: 150,
-  },
-  {
-    source: 2,
-    target: 3,
-    value: 100,
-  },
-  {
-    source: 2,
-    target: 4,
-    value: 50,
-  },
-  {
-    source: 2,
-    target: 5,
-    value: 100,
-  },
-];
-
-const NODES_L = [
-  {
-    name: 'y',
-  },
-  {
-    name: 'z',
-  },
-  {
-    name: 'lose',
-  },
-  {
-    name: 'cashFlow',
-  },
-  {
-    name: 'a',
-  },
-  {
-    name: 'b',
-  },
-];
-const LINKS_L = [
-  {
-    source: 0,
-    target: 3,
-    value: 100,
-  },
-  {
-    source: 1,
-    target: 3,
-    value: 50,
-  },
-  {
-    source: 2,
-    target: 3,
-    value: 100,
-  },
-  {
-    source: 3,
-    target: 4,
-    value: 100,
-  },
-  {
-    source: 3,
-    target: 5,
-    value: 150,
-  },
-];
+import {
+  NODES_1,
+  LINKS_1,
+  DATA_1,
+  INCOME_KEYS_1,
+  EXPENSE_KEYS_1,
+  NODE_KEY_ID_1,
+  DIFF_1,
+} from '../../../internals/mocks/data_1';
 
 describe('GetDiffListValue()', () => {
   it('get difference', () => {
-    expect(GetDiffListValue(arr1, arr2)).toEqual(100);
+    expect(GetDiffValue(DATA_1)).toEqual(DIFF_1);
+  });
+});
+
+describe('GetListOfExpenseType()', () => {
+  it('get difference', () => {
+    expect(GetListOfExpenseType(DATA_1)).toEqual(EXPENSE_KEYS_1);
+  });
+});
+
+describe('GetNodeArr()', () => {
+  it('get difference', () => {
+    expect(GetNodeArr(NODE_KEY_ID_1)).toEqual(NODES_1);
+  });
+});
+
+describe('GetNodeKeyIdMap()', () => {
+  it('get difference', () => {
+    expect(GetNodeKeyIdMap(INCOME_KEYS_1, EXPENSE_KEYS_1, DIFF_1)).toEqual(
+      NODE_KEY_ID_1,
+    );
+  });
+});
+
+describe('GetLinkArr()', () => {
+  it('get difference', () => {
+    expect(GetLinkArr(DATA_1, NODE_KEY_ID_1, DIFF_1)).toEqual(LINKS_1);
   });
 });
 
 describe('GetSankeyData()', () => {
   it('convert data to nodes & links - profit', () => {
-    expect(GetSankeyData(arr1, arr2)).toEqual({
-      nodes: NODES_P,
-      links: LINKS_P,
-    });
-  });
-  it('convert data to nodes & links - loss', () => {
-    expect(GetSankeyData(arr2, arr1)).toEqual({
-      nodes: NODES_L,
-      links: LINKS_L,
+    expect(GetSankeyData(DATA_1)).toEqual({
+      nodes: NODES_1,
+      links: LINKS_1,
     });
   });
 });

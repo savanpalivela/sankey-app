@@ -87,6 +87,9 @@ export function Home({
                 handleValueChange('income', index, val);
               }}
               handleRemoveAttRecord={index => {
+                if (index === selectedIncomeIndex) {
+                  setSelectedIncomeIndex(0);
+                }
                 removeIncomeRecord(index);
               }}
               handleAddAttRecord={({ key, value }) => {
@@ -178,10 +181,10 @@ function mapDispatchToProps(dispatch) {
         }),
       );
     },
-    removeIncomeRecord: incomeKeyText => {
+    removeIncomeRecord: incomeIndex => {
       dispatch(
         removeIncomeRecordAction({
-          incomeKeyText,
+          incomeIndex,
         }),
       );
     },

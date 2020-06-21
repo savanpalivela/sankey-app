@@ -39,7 +39,11 @@ function RecordAttribute({
         <button
           className="btn btn-light"
           type="button"
-          onClick={handleRemoveAttRecord}
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleRemoveAttRecord();
+          }}
         >
           <Trash size={24} />
         </button>

@@ -82,9 +82,12 @@ const homeReducer = (state = initialState, action) =>
       }
 
       case REMOVE_INCOME_RECORD: {
-        const records = [...state.records];
-        records.splice(action.payload.incomeIndex, 1);
-        draft.records = records;
+        // Avoiding display of blank components
+        if (state.records.length > 1) {
+          const records = [...state.records];
+          records.splice(action.payload.incomeIndex, 1);
+          draft.records = records;
+        }
         break;
       }
 

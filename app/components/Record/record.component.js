@@ -48,7 +48,6 @@ function Record({
   const getRecordEl = (item, i) => {
     const recordEl = (
       <RecordAttribute
-        key={item.key}
         keyText={item.key}
         value={item.value}
         handleValueChange={val => handleValueChange(i, val)}
@@ -148,7 +147,9 @@ function Record({
       <div className="card-body">
         {data &&
           data.length > -1 &&
-          data.map((item, i) => getRecordEl(item, i))}
+          data.map((item, i) => (
+            <div key={item.key}>{getRecordEl(item, i)}</div>
+          ))}
         {addRecordAttEl()}
         {unusedAttributes && unusedAttributes.length === 0 ? null : (
           <button
