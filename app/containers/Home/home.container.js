@@ -94,6 +94,7 @@ export function Home({
               }}
               handleAddAttRecord={({ key, value }) => {
                 addIncomeRecord(key, value);
+                setSelectedIncomeIndex(records.length);
               }}
               enableAttSelection
               onRowSelect={i => {

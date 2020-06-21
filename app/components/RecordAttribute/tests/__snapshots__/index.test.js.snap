@@ -18,6 +18,8 @@ exports[`<RecordAttribute /> Should render and match the snapshot 1`] = `
   >
     <input
       className="form-control"
+      data-testid="record-value"
+      name="record-value"
       onChange={[Function]}
       type="number"
       value={1000}
@@ -28,6 +30,7 @@ exports[`<RecordAttribute /> Should render and match the snapshot 1`] = `
   >
     <button
       className="btn btn-light"
+      data-testid="remove-btn"
       onClick={[Function]}
       type="button"
     >

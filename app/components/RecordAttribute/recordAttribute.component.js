@@ -29,6 +29,8 @@ function RecordAttribute({
       </div>
       <div className="col-sm-5">
         <input
+          data-testid="record-value"
+          name="record-value"
           className="form-control"
           onChange={handleChange}
           value={value}
@@ -37,6 +39,7 @@ function RecordAttribute({
       </div>
       <div className="col-sm-2">
         <button
+          data-testid="remove-btn"
           className="btn btn-light"
           type="button"
           onClick={e => {

@@ -12,7 +12,6 @@ import { Plus } from 'react-bootstrap-icons';
 import messages from './record.messages';
 import RecordAttribute from '../RecordAttribute';
 import styles from './record.styles.scss';
-
 function Record({
   title,
   data,
@@ -80,7 +79,7 @@ function Record({
   // Add record Attribute Element
   const addRecordAttEl = () =>
     showAddEl && (
-      <div className="row">
+      <div className="row" data-testid="add-attribute-el">
         <div className="col-sm-5">
           <select
             className="form-control"
@@ -123,6 +122,7 @@ function Record({
             disabled={newRecordAttObj.key === '' || newRecordAttObj.value === 0}
             className="btn btn-light"
             type="button"
+            data-testid="add-attribute-btn"
             onClick={handleAddAttClick}
           >
             <FormattedMessage {...messages.addRecordAtt} />
@@ -144,7 +144,7 @@ function Record({
           </span>
         )}
       </div>
-      <div className="card-body">
+      <div className="card-body" data-testid="record-main">
         {data &&
           data.length > -1 &&
           data.map((item, i) => (
@@ -153,6 +153,7 @@ function Record({
         {addRecordAttEl()}
         {unusedAttributes && unusedAttributes.length === 0 ? null : (
           <button
+            data-testid="enable-add-btn"
             className="btn btn-light"
             type="button"
             onClick={() => {
